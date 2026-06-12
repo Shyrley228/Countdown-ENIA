@@ -1,94 +1,15 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="es">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="Contador de plazos oficiales de la Estrategia Nacional de Inteligencia Artificial del Perú 2026-2030." />
-  <title>Plazos oficiales ENIA Perú</title>
-  <meta name="theme-color" content="#18324c" />
-  <meta property="og:title" content="Plazos oficiales ENIA Perú" />
-  <meta property="og:description" content="Contador de días hábiles para los plazos oficiales de la ENIA peruana." />
-  <meta property="og:type" content="website" />
-  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
-  <link rel="stylesheet" href="assets/styles.css" />
-</head>
-<body>
-  <noscript>Esta aplicación requiere JavaScript para calcular los días hábiles.</noscript>
-  <main class="shell">
-    <section class="hero">
-      <div class="eyebrow">Perú · ENIA 2026-2030</div>
-      <h1>Contador de plazos oficiales</h1>
-      <p>Seguimiento de los plazos expresos de la Resolución Ministerial N.° 152-2026-PCM, calculados en días hábiles para el sector público peruano.</p>
-      <div class="hero-meta">
-        <div class="hero-stat"><span>Publicación en El Peruano</span><strong>1 de mayo de 2026</strong></div>
-        <div class="hero-stat"><span>Primer día computable</span><strong>4 de mayo de 2026</strong></div>
-        <div class="hero-stat"><span>Plazos monitoreados</span><strong>3 obligaciones expresas</strong></div>
-      </div>
-    </section>
-
-    <aside class="notice">
-      <strong>Criterio de cálculo.</strong> El cómputo comienza el día hábil siguiente a la publicación. Se excluyen sábados, domingos, feriados nacionales y el día no laborable del sector público del 27 de julio de 2026. Las fechas deben volver a verificarse si el Gobierno declara nuevos días no laborables que afecten el periodo.
-    </aside>
-
-    <section class="toolbar" aria-label="Controles de fecha">
-      <div>
-        <h2>Estado de los plazos</h2>
-        <p>La fecha de consulta puede modificarse para simular el avance.</p>
-      </div>
-      <div class="controls">
-        <div class="field">
-          <label for="asOfDate">Fecha de consulta</label>
-          <input id="asOfDate" type="date" />
-        </div>
-        <button id="todayButton" class="btn-secondary" type="button">Usar hoy</button>
-        <button id="exportButton" class="btn-primary" type="button">Exportar CSV</button>
-      </div>
-    </section>
-
-    <section id="cards" class="cards" aria-live="polite"></section>
-
-    <section class="panel-grid">
-      <article class="panel">
-        <h2>Cómo interpretar el tablero</h2>
-        <p>La barra representa el porcentaje de días hábiles consumidos desde el inicio del cómputo hasta la fecha límite. El semáforo se determina por los días hábiles restantes:</p>
-        <div class="legend">
-          <div class="legend-item green">Verde: más de 30 días</div>
-          <div class="legend-item yellow">Amarillo: entre 10 y 30 días</div>
-          <div class="legend-item red">Rojo: menos de 10 días o vencido</div>
-        </div>
-        <ul>
-          <li>El plazo de 90 días corresponde a los lineamientos del Oficial de Inteligencia Artificial y su Equipo Técnico.</li>
-          <li>Los dos plazos de 120 días corresponden al Catálogo IA Perú y al marco de referencia de tecnologías y datos.</li>
-          <li>La herramienta es informativa y no sustituye la validación jurídica de la entidad responsable.</li>
-        </ul>
-      </article>
-
-      <article class="panel">
-        <h3>Referencia bibliográfica y normativa</h3>
-        <div class="source-list">
-          <a class="source" href="https://www.gob.pe/institucion/pcm/normas-legales/8081563-152-2026-pcm" target="_blank" rel="noopener noreferrer">
-            <strong>Resolución Ministerial N.° 152-2026-PCM</strong>
-            <span>Presidencia del Consejo de Ministros, 2026.</span>
-          </a>
-          <a class="source" href="https://cdn.www.gob.pe/uploads/document/file/9902385/8081563-anexo-rm-n-152-2026-pcm-enia%282%29.pdf?v=1778018141" target="_blank" rel="noopener noreferrer">
-            <strong>Anexo: Estrategia Nacional de Inteligencia Artificial 2026-2030</strong>
-            <span>Hoja de ruta, ejes, acciones, responsables e indicadores.</span>
-          </a>
-          <a class="source" href="https://www.gob.pe/feriados" target="_blank" rel="noopener noreferrer">
-            <strong>Calendario oficial de feriados 2026</strong>
-            <span>Plataforma Digital Única del Estado Peruano.</span>
-          </a>
-          <a class="source" href="https://www.gob.pe/institucion/pcm/normas-legales/8180439-075-2026-pcm" target="_blank" rel="noopener noreferrer">
-            <strong>Decreto Supremo N.° 075-2026-PCM</strong>
-            <span>Día no laborable para el sector público: 27 de julio de 2026.</span>
-          </a>
-        </div>
-      </article>
-    </section>
-
-    <p class="footer">Versión informativa con calendario revisado al 11 de junio de 2026. Proyecto estático preparado para GitHub y despliegue automático en Vercel.</p>
-  </main>
-  <script src="assets/config.js" defer></script>
-  <script src="assets/app.js" defer></script>
-</body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Mapa interactivo de obligaciones de la Estrategia Nacional de Inteligencia Artificial del Perú 2026-2030." />
+    <meta name="theme-color" content="#111827" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <title>Mapa de obligaciones ENIA</title>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
 </html>

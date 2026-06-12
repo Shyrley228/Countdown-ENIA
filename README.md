@@ -1,90 +1,124 @@
-# Contador de plazos oficiales ENIA Perú
+# Mapa de obligaciones de la ENIA
 
-Aplicación web estática para visualizar los plazos expresos relacionados con la Estrategia Nacional de Inteligencia Artificial del Perú 2026-2030. Calcula días hábiles restantes, porcentaje consumido y estado semaforizado.
+Aplicación web lúdica para que una entidad pública peruana identifique sus obligaciones, roles, metas y oportunidades dentro de la **Estrategia Nacional de Inteligencia Artificial 2026–2030**.
+
+## Tecnologías
+
+- React 18
+- Vite
+- Tailwind CSS 4
+- Vercel Functions
+- Claude API mediante el SDK oficial de Anthropic
+- Persistencia local del avance con `localStorage`
 
 ## Funcionalidades
 
-- Fecha límite calculada por plazo.
-- Días hábiles restantes o días de atraso.
-- Barra de progreso.
-- Semáforo: verde (>30), amarillo (10 a 30) y rojo (<10 o vencido).
-- Selector de fecha para simulación.
-- Exportación de resultados a CSV.
-- Diseño adaptable a celular y escritorio.
-- Sin backend, base de datos ni claves de entorno.
+- Selector por tipo de entidad pública.
+- Selector opcional de entidad con responsabilidad expresa en la hoja de ruta.
+- Obligaciones transversales y metas específicas separadas por tipo.
+- Responsables, plazo o hito, metas acumuladas 2026–2030 y páginas fuente.
+- Filtros, búsqueda y seguimiento lúdico de avance.
+- Chat “NIA” con contexto limitado a las obligaciones del perfil seleccionado.
+- Diseño responsive para escritorio y móvil.
+
+## Fuente principal
+
+Estrategia Nacional de Inteligencia Artificial 2026–2030, anexo de la Resolución Ministerial N.° 152-2026-PCM.
+
+La ENIA establece mayormente roles, condiciones de implementación y metas anuales acumuladas. Por ello la app no inventa fechas calendario cuando la fuente no las contiene.
+
+## Desarrollo local
+
+```bash
+npm install
+npm run dev
+```
+
+El frontend funcionará con Vite, pero la ruta `/api/chat` requiere una función de Vercel. Para probar frontend y función juntos:
+
+```bash
+npm install -g vercel
+cp .env.example .env.local
+# completa ANTHROPIC_API_KEY
+vercel dev
+```
+
+## Variables de entorno
+
+En Vercel, abre **Project Settings → Environment Variables** y crea:
+
+| Variable | Obligatoria | Descripción |
+|---|---:|---|
+| `ANTHROPIC_API_KEY` | Sí | Token privado de Anthropic. Nunca uses prefijo `VITE_`. |
+| `CLAUDE_MODEL` | No | Por defecto se usa `claude-sonnet-4-6`. |
+
+Después de crear o cambiar variables, realiza un nuevo deployment.
+
+## Despliegue en GitHub y Vercel
+
+1. Crea un repositorio vacío en GitHub.
+2. Sube todos los archivos del proyecto.
+3. En Vercel selecciona **Add New → Project**.
+4. Importa el repositorio.
+5. Vercel detectará Vite. Los valores ya están declarados en `vercel.json`:
+   - Build command: `npm run build`
+   - Output directory: `dist`
+6. Configura las variables de entorno.
+7. Pulsa **Deploy**.
+
+Cada `push` a la rama principal generará un nuevo despliegue de producción. Los pull requests pueden generar Preview Deployments.
+
+## Seguridad de la integración con Claude
+
+- La clave se utiliza únicamente dentro de `/api/chat.js`.
+- El navegador nunca recibe `ANTHROPIC_API_KEY`.
+- La función limita tamaño e historial de mensajes.
+- Incluye rate limiting básico por instancia y validación de entrada.
+- El prompt bloquea solicitudes de secretos y exige distinguir mandatos, metas y recomendaciones.
+
+Para producción con tráfico alto, añade protección adicional con Vercel Firewall, autenticación y un rate limiter persistente como Upstash Redis.
 
 ## Estructura
 
 ```text
-enia-plazos-vercel/
-├── index.html
-├── vercel.json
-├── README.md
-├── LICENSE
+mapa-obligaciones-enia/
+├── api/
+│   └── chat.js
+├── public/
+│   └── favicon.svg
+├── src/
+│   ├── components/
+│   │   ├── ChatPanel.jsx
+│   │   ├── ObligationCard.jsx
+│   │   ├── Onboarding.jsx
+│   │   └── TargetTimeline.jsx
+│   ├── data/
+│   │   └── enia.js
+│   ├── App.jsx
+│   ├── index.css
+│   └── main.jsx
+├── .env.example
 ├── .gitignore
-├── assets/
-│   ├── app.js
-│   ├── config.js
-│   ├── favicon.svg
-│   └── styles.css
-└── docs/
-    └── FUENTES_Y_CRITERIOS.md
+├── index.html
+├── package.json
+├── vercel.json
+└── vite.config.js
 ```
 
-## Ejecutar localmente
+## Mantenimiento de datos
 
-Puede abrir `index.html` directamente. Para probarlo como sitio web local, desde la carpeta del proyecto ejecute:
+La matriz normativa está centralizada en `src/data/enia.js`. Cada registro contiene:
 
-```bash
-python -m http.server 8000
-```
+- tipo del elemento;
+- ámbito de aplicación;
+- responsable;
+- plazo o hito;
+- metas anuales;
+- páginas fuente;
+- pasos sugeridos.
 
-Luego visite `http://localhost:8000`.
+Antes de incorporar una nueva obligación, verifica si es mandato general, función de un rol, meta nacional o recomendación.
 
-## Publicar en GitHub
+## Aviso
 
-Cree un repositorio vacío y ejecute desde esta carpeta:
-
-```bash
-git init
-git add .
-git commit -m "Publicar contador de plazos ENIA"
-git branch -M main
-git remote add origin https://github.com/USUARIO/NOMBRE-DEL-REPOSITORIO.git
-git push -u origin main
-```
-
-También puede crear el repositorio en GitHub y cargar manualmente todos los archivos y carpetas. No cargue únicamente el ZIP.
-
-## Desplegar en Vercel
-
-1. Ingrese a Vercel y seleccione **Add New > Project**.
-2. Conecte su cuenta de GitHub.
-3. Importe el repositorio.
-4. Use **Framework Preset: Other**.
-5. Mantenga la carpeta raíz en `./` y deje vacíos Build Command y Output Directory.
-6. Seleccione **Deploy**.
-
-Cada `push` posterior a la rama de producción generará un nuevo despliegue. Las ramas y pull requests pueden generar vistas previas.
-
-## Actualizar fechas, plazos o feriados
-
-Edite únicamente `assets/config.js`:
-
-- `publicationDate`: fecha base del cómputo.
-- `officialNonBusinessDays`: feriados y días no laborables excluidos.
-- `deadlines`: nombre, fundamento, descripción y cantidad de días hábiles.
-
-Después confirme y envíe el cambio a GitHub:
-
-```bash
-git add assets/config.js
-git commit -m "Actualizar calendario de días no laborables"
-git push
-```
-
-Vercel publicará la actualización automáticamente.
-
-## Alcance
-
-La aplicación es informativa. Debe actualizarse cuando se publiquen nuevos feriados, días no laborables o modificaciones normativas que alteren el cómputo.
+Esta aplicación es informativa. No sustituye la interpretación oficial de la PCM, los lineamientos posteriores ni la asesoría jurídica de cada entidad.
