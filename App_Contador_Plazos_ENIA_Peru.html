@@ -1,0 +1,722 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Contador de plazos oficiales de la Estrategia Nacional de Inteligencia Artificial del Perú 2026-2030." />
+  <title>Plazos oficiales ENIA Perú</title>
+  <style>
+    :root {
+      --ink: #162033;
+      --muted: #667085;
+      --surface: #ffffff;
+      --surface-soft: #f5f7fb;
+      --line: #e4e8f0;
+      --brand: #861f2d;
+      --brand-dark: #5e1420;
+      --navy: #18324c;
+      --green: #2f855a;
+      --green-soft: #e8f5ee;
+      --yellow: #b7791f;
+      --yellow-soft: #fff7d6;
+      --red: #c53030;
+      --red-soft: #fdecec;
+      --shadow: 0 12px 34px rgba(26, 42, 68, 0.09);
+      --radius: 20px;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at top right, rgba(134,31,45,.08), transparent 32%),
+        linear-gradient(180deg, #f7f8fb 0%, #eef2f7 100%);
+      min-height: 100vh;
+    }
+
+    a { color: var(--brand); }
+
+    .shell {
+      width: min(1180px, calc(100% - 32px));
+      margin: 0 auto;
+      padding: 28px 0 54px;
+    }
+
+    .hero {
+      position: relative;
+      overflow: hidden;
+      border-radius: 28px;
+      color: white;
+      background: linear-gradient(135deg, var(--navy), #0f2437 62%, var(--brand-dark));
+      box-shadow: var(--shadow);
+      padding: 34px;
+    }
+
+    .hero::after {
+      content: "";
+      position: absolute;
+      width: 280px;
+      height: 280px;
+      right: -92px;
+      top: -112px;
+      border-radius: 50%;
+      border: 42px solid rgba(255,255,255,.06);
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 7px 11px;
+      border: 1px solid rgba(255,255,255,.2);
+      border-radius: 999px;
+      background: rgba(255,255,255,.08);
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+    }
+
+    h1 {
+      max-width: 790px;
+      margin: 18px 0 10px;
+      font-size: clamp(31px, 5vw, 54px);
+      line-height: 1.02;
+      letter-spacing: -.04em;
+    }
+
+    .hero p {
+      max-width: 820px;
+      margin: 0;
+      color: rgba(255,255,255,.82);
+      font-size: 17px;
+      line-height: 1.6;
+    }
+
+    .hero-meta {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+      margin-top: 28px;
+    }
+
+    .hero-stat {
+      padding: 16px;
+      border: 1px solid rgba(255,255,255,.13);
+      border-radius: 16px;
+      background: rgba(255,255,255,.07);
+      backdrop-filter: blur(8px);
+    }
+
+    .hero-stat span {
+      display: block;
+      color: rgba(255,255,255,.68);
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: .07em;
+      font-weight: 800;
+    }
+
+    .hero-stat strong {
+      display: block;
+      margin-top: 7px;
+      font-size: 20px;
+      letter-spacing: -.02em;
+    }
+
+    .notice {
+      margin-top: 18px;
+      border-left: 5px solid var(--brand);
+      border-radius: 16px;
+      background: #fff;
+      box-shadow: 0 5px 18px rgba(26,42,68,.06);
+      padding: 17px 19px;
+      line-height: 1.55;
+      color: #3a4658;
+    }
+
+    .toolbar {
+      display: flex;
+      align-items: end;
+      justify-content: space-between;
+      gap: 16px;
+      margin: 28px 0 18px;
+      flex-wrap: wrap;
+    }
+
+    .toolbar h2 {
+      margin: 0 0 4px;
+      font-size: 25px;
+      letter-spacing: -.025em;
+    }
+
+    .toolbar p { margin: 0; color: var(--muted); }
+
+    .controls {
+      display: flex;
+      gap: 10px;
+      align-items: end;
+      flex-wrap: wrap;
+    }
+
+    .field label {
+      display: block;
+      font-size: 12px;
+      font-weight: 800;
+      color: var(--muted);
+      margin-bottom: 6px;
+      text-transform: uppercase;
+      letter-spacing: .05em;
+    }
+
+    input[type="date"] {
+      height: 43px;
+      border: 1px solid #ccd3df;
+      border-radius: 11px;
+      padding: 0 12px;
+      font: inherit;
+      color: var(--ink);
+      background: white;
+    }
+
+    button {
+      height: 43px;
+      border: 0;
+      border-radius: 11px;
+      padding: 0 15px;
+      font: inherit;
+      font-weight: 800;
+      cursor: pointer;
+      transition: transform .16s ease, box-shadow .16s ease;
+    }
+
+    button:hover { transform: translateY(-1px); }
+
+    .btn-primary { background: var(--brand); color: white; box-shadow: 0 8px 18px rgba(134,31,45,.2); }
+    .btn-secondary { background: white; color: var(--ink); border: 1px solid #ccd3df; }
+
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 18px;
+    }
+
+    .card {
+      background: var(--surface);
+      border: 1px solid rgba(212,218,228,.9);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 22px;
+      display: flex;
+      flex-direction: column;
+      min-height: 360px;
+    }
+
+    .card-top {
+      display: flex;
+      align-items: start;
+      justify-content: space-between;
+      gap: 14px;
+    }
+
+    .card-index {
+      display: grid;
+      place-items: center;
+      width: 42px;
+      height: 42px;
+      flex: 0 0 auto;
+      border-radius: 13px;
+      background: #eef2f6;
+      color: var(--navy);
+      font-weight: 900;
+    }
+
+    .status {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      border-radius: 999px;
+      padding: 7px 10px;
+      font-size: 12px;
+      font-weight: 900;
+    }
+
+    .status::before {
+      content: "";
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: currentColor;
+    }
+
+    .status.green { color: var(--green); background: var(--green-soft); }
+    .status.yellow { color: var(--yellow); background: var(--yellow-soft); }
+    .status.red { color: var(--red); background: var(--red-soft); }
+
+    .card h3 {
+      margin: 18px 0 8px;
+      font-size: 20px;
+      line-height: 1.25;
+      letter-spacing: -.02em;
+    }
+
+    .basis {
+      margin: 0 0 14px;
+      color: var(--brand);
+      font-size: 13px;
+      font-weight: 800;
+    }
+
+    .description {
+      margin: 0;
+      color: #556173;
+      font-size: 14px;
+      line-height: 1.55;
+    }
+
+    .deadline-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-top: auto;
+      padding-top: 22px;
+    }
+
+    .metric {
+      background: var(--surface-soft);
+      border-radius: 14px;
+      padding: 13px;
+    }
+
+    .metric span {
+      display: block;
+      color: var(--muted);
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: .05em;
+      font-weight: 900;
+    }
+
+    .metric strong {
+      display: block;
+      margin-top: 6px;
+      font-size: 18px;
+      letter-spacing: -.02em;
+    }
+
+    .progress-wrap { margin-top: 16px; }
+
+    .progress-meta {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      color: var(--muted);
+      font-size: 12px;
+      margin-bottom: 7px;
+    }
+
+    .progress {
+      width: 100%;
+      height: 11px;
+      background: #e9edf3;
+      border-radius: 999px;
+      overflow: hidden;
+    }
+
+    .progress > div {
+      height: 100%;
+      border-radius: inherit;
+      transition: width .4s ease;
+    }
+
+    .progress > div.green { background: var(--green); }
+    .progress > div.yellow { background: var(--yellow); }
+    .progress > div.red { background: var(--red); }
+
+    .panel-grid {
+      display: grid;
+      grid-template-columns: 1.1fr .9fr;
+      gap: 18px;
+      margin-top: 22px;
+    }
+
+    .panel {
+      background: white;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 22px;
+      box-shadow: 0 8px 26px rgba(26,42,68,.06);
+    }
+
+    .panel h2, .panel h3 { margin-top: 0; letter-spacing: -.02em; }
+    .panel p, .panel li { color: #556173; line-height: 1.6; }
+    .panel ul { padding-left: 20px; margin-bottom: 0; }
+
+    .legend {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      margin-top: 14px;
+    }
+
+    .legend-item {
+      border-radius: 13px;
+      padding: 12px;
+      font-size: 13px;
+      font-weight: 850;
+    }
+
+    .legend-item.green { background: var(--green-soft); color: var(--green); }
+    .legend-item.yellow { background: var(--yellow-soft); color: var(--yellow); }
+    .legend-item.red { background: var(--red-soft); color: var(--red); }
+
+    .source-list {
+      display: grid;
+      gap: 10px;
+    }
+
+    .source {
+      display: block;
+      text-decoration: none;
+      border: 1px solid var(--line);
+      border-radius: 13px;
+      padding: 13px 14px;
+      color: var(--ink);
+      background: #fafbfc;
+    }
+
+    .source strong { display: block; margin-bottom: 4px; }
+    .source span { color: var(--muted); font-size: 13px; }
+
+    .footer {
+      margin-top: 22px;
+      color: var(--muted);
+      text-align: center;
+      font-size: 12px;
+      line-height: 1.6;
+    }
+
+    .sr-only {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0,0,0,0);
+      white-space: nowrap;
+      border: 0;
+    }
+
+    @media (max-width: 900px) {
+      .cards { grid-template-columns: 1fr; }
+      .panel-grid { grid-template-columns: 1fr; }
+      .hero-meta { grid-template-columns: 1fr; }
+    }
+
+    @media (max-width: 620px) {
+      .shell { width: min(100% - 20px, 1180px); padding-top: 10px; }
+      .hero { padding: 25px 20px; border-radius: 20px; }
+      .toolbar { align-items: stretch; }
+      .controls { width: 100%; }
+      .field { flex: 1 1 100%; }
+      input[type="date"] { width: 100%; }
+      button { flex: 1; }
+      .deadline-grid { grid-template-columns: 1fr; }
+      .legend { grid-template-columns: 1fr; }
+    }
+
+    @media print {
+      body { background: white; }
+      .shell { width: 100%; padding: 0; }
+      .hero, .card, .panel { box-shadow: none; }
+      .controls { display: none; }
+      .cards { grid-template-columns: 1fr; }
+      .card { break-inside: avoid; }
+    }
+  </style>
+</head>
+<body>
+  <main class="shell">
+    <section class="hero">
+      <div class="eyebrow">Perú · ENIA 2026-2030</div>
+      <h1>Contador de plazos oficiales</h1>
+      <p>Seguimiento de los plazos expresos de la Resolución Ministerial N.° 152-2026-PCM, calculados en días hábiles para el sector público peruano.</p>
+      <div class="hero-meta">
+        <div class="hero-stat"><span>Publicación en El Peruano</span><strong>1 de mayo de 2026</strong></div>
+        <div class="hero-stat"><span>Primer día computable</span><strong>4 de mayo de 2026</strong></div>
+        <div class="hero-stat"><span>Plazos monitoreados</span><strong>3 obligaciones expresas</strong></div>
+      </div>
+    </section>
+
+    <aside class="notice">
+      <strong>Criterio de cálculo.</strong> El cómputo comienza el día hábil siguiente a la publicación. Se excluyen sábados, domingos, feriados nacionales y el día no laborable del sector público del 27 de julio de 2026. Las fechas deben volver a verificarse si el Gobierno declara nuevos días no laborables que afecten el periodo.
+    </aside>
+
+    <section class="toolbar" aria-label="Controles de fecha">
+      <div>
+        <h2>Estado de los plazos</h2>
+        <p>La fecha de consulta puede modificarse para simular el avance.</p>
+      </div>
+      <div class="controls">
+        <div class="field">
+          <label for="asOfDate">Fecha de consulta</label>
+          <input id="asOfDate" type="date" />
+        </div>
+        <button id="todayButton" class="btn-secondary" type="button">Usar hoy</button>
+        <button id="exportButton" class="btn-primary" type="button">Exportar CSV</button>
+      </div>
+    </section>
+
+    <section id="cards" class="cards" aria-live="polite"></section>
+
+    <section class="panel-grid">
+      <article class="panel">
+        <h2>Cómo interpretar el tablero</h2>
+        <p>La barra representa el porcentaje de días hábiles consumidos desde el inicio del cómputo hasta la fecha límite. El semáforo se determina por los días hábiles restantes:</p>
+        <div class="legend">
+          <div class="legend-item green">Verde: más de 30 días</div>
+          <div class="legend-item yellow">Amarillo: entre 10 y 30 días</div>
+          <div class="legend-item red">Rojo: menos de 10 días o vencido</div>
+        </div>
+        <ul>
+          <li>El plazo de 90 días corresponde a los lineamientos del Oficial de Inteligencia Artificial y su Equipo Técnico.</li>
+          <li>Los dos plazos de 120 días corresponden al Catálogo IA Perú y al marco de referencia de tecnologías y datos.</li>
+          <li>La herramienta es informativa y no sustituye la validación jurídica de la entidad responsable.</li>
+        </ul>
+      </article>
+
+      <article class="panel">
+        <h3>Referencia bibliográfica y normativa</h3>
+        <div class="source-list">
+          <a class="source" href="https://www.gob.pe/institucion/pcm/normas-legales/8081563-152-2026-pcm" target="_blank" rel="noopener noreferrer">
+            <strong>Resolución Ministerial N.° 152-2026-PCM</strong>
+            <span>Presidencia del Consejo de Ministros, 2026.</span>
+          </a>
+          <a class="source" href="https://cdn.www.gob.pe/uploads/document/file/9902385/8081563-anexo-rm-n-152-2026-pcm-enia%282%29.pdf?v=1778018141" target="_blank" rel="noopener noreferrer">
+            <strong>Anexo: Estrategia Nacional de Inteligencia Artificial 2026-2030</strong>
+            <span>Hoja de ruta, ejes, acciones, responsables e indicadores.</span>
+          </a>
+          <a class="source" href="https://www.gob.pe/feriados" target="_blank" rel="noopener noreferrer">
+            <strong>Calendario oficial de feriados 2026</strong>
+            <span>Plataforma Digital Única del Estado Peruano.</span>
+          </a>
+          <a class="source" href="https://www.gob.pe/institucion/pcm/normas-legales/8180439-075-2026-pcm" target="_blank" rel="noopener noreferrer">
+            <strong>Decreto Supremo N.° 075-2026-PCM</strong>
+            <span>Día no laborable para el sector público: 27 de julio de 2026.</span>
+          </a>
+        </div>
+      </article>
+    </section>
+
+    <p class="footer">Versión informativa preparada con calendario oficial disponible al 11 de junio de 2026. La aplicación funciona sin conexión y recalcula automáticamente según la fecha seleccionada.</p>
+  </main>
+
+  <script>
+    "use strict";
+
+    const PUBLICATION_DATE = "2026-05-01";
+
+    const officialNonBusinessDays = new Set([
+      "2026-01-01", "2026-01-02",
+      "2026-04-02", "2026-04-03",
+      "2026-05-01",
+      "2026-06-07", "2026-06-29",
+      "2026-07-23", "2026-07-27", "2026-07-28", "2026-07-29",
+      "2026-08-06", "2026-08-30",
+      "2026-10-08",
+      "2026-11-01",
+      "2026-12-08", "2026-12-09", "2026-12-25"
+    ]);
+
+    const deadlines = [
+      {
+        id: "oia",
+        name: "Lineamientos del Oficial de Inteligencia Artificial y del Equipo Técnico",
+        basis: "Primera Disposición Complementaria Final",
+        description: "Aprobación de los lineamientos sobre perfil, responsabilidades, designación y articulación del OIA y del Equipo Técnico de Datos e Inteligencia Artificial.",
+        businessDays: 90
+      },
+      {
+        id: "catalogo",
+        name: "Implementación del Catálogo IA Perú",
+        basis: "Tercera Disposición Complementaria Final",
+        description: "Implementación del Catálogo Nacional de Conjuntos de Datos y Modelos para Inteligencia Artificial.",
+        businessDays: 120
+      },
+      {
+        id: "marco",
+        name: "Marco de referencia para Gobierno y Gestión de Tecnologías y Datos",
+        basis: "Cuarta Disposición Complementaria Final",
+        description: "Aprobación del marco aplicable a entidades públicas, incluyendo referencias para la intervención y participación humana en soluciones de IA.",
+        businessDays: 120
+      }
+    ];
+
+    const cardsContainer = document.getElementById("cards");
+    const asOfDateInput = document.getElementById("asOfDate");
+    const todayButton = document.getElementById("todayButton");
+    const exportButton = document.getElementById("exportButton");
+
+    function toISODate(date) {
+      const year = date.getFullYear();
+      const month = String(date.getMonth() + 1).padStart(2, "0");
+      const day = String(date.getDate()).padStart(2, "0");
+      return `${year}-${month}-${day}`;
+    }
+
+    function parseLocalDate(iso) {
+      const [year, month, day] = iso.split("-").map(Number);
+      return new Date(year, month - 1, day, 12, 0, 0, 0);
+    }
+
+    function addCalendarDays(date, amount) {
+      const result = new Date(date);
+      result.setDate(result.getDate() + amount);
+      return result;
+    }
+
+    function isBusinessDay(date) {
+      const day = date.getDay();
+      return day !== 0 && day !== 6 && !officialNonBusinessDays.has(toISODate(date));
+    }
+
+    function addBusinessDays(startDate, totalDays) {
+      let cursor = new Date(startDate);
+      let counted = 0;
+      while (counted < totalDays) {
+        cursor = addCalendarDays(cursor, 1);
+        if (isBusinessDay(cursor)) counted += 1;
+      }
+      return cursor;
+    }
+
+    function businessDaysElapsed(startDate, asOfDate, maximum) {
+      if (asOfDate <= startDate) return 0;
+      let cursor = new Date(startDate);
+      let counted = 0;
+      while (cursor < asOfDate && counted < maximum) {
+        cursor = addCalendarDays(cursor, 1);
+        if (isBusinessDay(cursor)) counted += 1;
+      }
+      return counted;
+    }
+
+    function businessDaysBetweenExclusiveStart(startDate, endDate) {
+      if (endDate <= startDate) return 0;
+      let cursor = new Date(startDate);
+      let counted = 0;
+      while (cursor < endDate) {
+        cursor = addCalendarDays(cursor, 1);
+        if (isBusinessDay(cursor)) counted += 1;
+      }
+      return counted;
+    }
+
+    function statusFromRemaining(remaining, overdue) {
+      if (overdue > 0) return { key: "red", label: "Vencido" };
+      if (remaining > 30) return { key: "green", label: "En plazo" };
+      if (remaining >= 10) return { key: "yellow", label: "Atención" };
+      return { key: "red", label: remaining === 0 ? "Vence hoy" : "Crítico" };
+    }
+
+    function formatDate(date) {
+      return new Intl.DateTimeFormat("es-PE", {
+        day: "2-digit",
+        month: "short",
+        year: "numeric"
+      }).format(date).replace(" de ", " ").replace(" de ", " ");
+    }
+
+    function calculateDeadline(item, asOfDate) {
+      const publication = parseLocalDate(PUBLICATION_DATE);
+      const dueDate = addBusinessDays(publication, item.businessDays);
+      const elapsed = businessDaysElapsed(publication, asOfDate, item.businessDays);
+      const remaining = Math.max(item.businessDays - elapsed, 0);
+      const overdue = asOfDate > dueDate ? businessDaysBetweenExclusiveStart(dueDate, asOfDate) : 0;
+      const progress = Math.min(100, Math.max(0, (elapsed / item.businessDays) * 100));
+      const status = statusFromRemaining(remaining, overdue);
+      return { ...item, dueDate, elapsed, remaining, overdue, progress, status };
+    }
+
+    function render() {
+      const asOfDate = parseLocalDate(asOfDateInput.value);
+      const results = deadlines.map(item => calculateDeadline(item, asOfDate));
+
+      cardsContainer.innerHTML = results.map((item, index) => {
+        const remainingLabel = item.overdue > 0 ? `-${item.overdue}` : item.remaining;
+        const remainingCaption = item.overdue > 0 ? "días hábiles de atraso" : "días hábiles restantes";
+        return `
+          <article class="card">
+            <div class="card-top">
+              <div class="card-index" aria-hidden="true">${index + 1}</div>
+              <span class="status ${item.status.key}">${item.status.label}</span>
+            </div>
+            <h3>${item.name}</h3>
+            <p class="basis">${item.basis}</p>
+            <p class="description">${item.description}</p>
+            <div class="deadline-grid">
+              <div class="metric">
+                <span>Fecha límite calculada</span>
+                <strong>${formatDate(item.dueDate)}</strong>
+              </div>
+              <div class="metric">
+                <span>${remainingCaption}</span>
+                <strong>${remainingLabel}</strong>
+              </div>
+            </div>
+            <div class="progress-wrap">
+              <div class="progress-meta">
+                <span>${item.elapsed} de ${item.businessDays} días consumidos</span>
+                <strong>${item.progress.toFixed(0)}%</strong>
+              </div>
+              <div class="progress" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="${item.progress.toFixed(0)}" aria-label="Avance del plazo">
+                <div class="${item.status.key}" style="width:${item.progress}%"></div>
+              </div>
+            </div>
+          </article>
+        `;
+      }).join("");
+    }
+
+    function setToday() {
+      asOfDateInput.value = toISODate(new Date());
+      render();
+    }
+
+    function exportCSV() {
+      const asOfDate = parseLocalDate(asOfDateInput.value);
+      const rows = deadlines.map(item => calculateDeadline(item, asOfDate));
+      const header = ["Nombre", "Base normativa", "Fecha límite", "Días hábiles restantes", "Estado", "Avance porcentual"];
+      const body = rows.map(item => [
+        item.name,
+        item.basis,
+        toISODate(item.dueDate),
+        item.overdue > 0 ? -item.overdue : item.remaining,
+        item.status.label,
+        item.progress.toFixed(0) + "%"
+      ]);
+      const escape = value => `"${String(value).replaceAll('"', '""')}"`;
+      const csv = [header, ...body].map(row => row.map(escape).join(",")).join("\n");
+      const blob = new Blob(["\ufeff" + csv], { type: "text/csv;charset=utf-8" });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement("a");
+      link.href = url;
+      link.download = `plazos_enia_${asOfDateInput.value}.csv`;
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+      URL.revokeObjectURL(url);
+    }
+
+    asOfDateInput.addEventListener("change", render);
+    todayButton.addEventListener("click", setToday);
+    exportButton.addEventListener("click", exportCSV);
+
+    setToday();
+  </script>
+</body>
+</html>

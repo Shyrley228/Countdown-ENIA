@@ -1,0 +1,14 @@
+APP: Contador de plazos oficiales ENIA Perú
+
+1. Abra el archivo "App_Contador_Plazos_ENIA_Peru.html" con Google Chrome, Microsoft Edge o Firefox.
+2. La app funciona sin instalar programas y sin conexión a internet.
+3. Use el selector "Fecha de consulta" para revisar el estado en una fecha determinada.
+4. El botón "Exportar CSV" descarga el estado de los plazos para la fecha seleccionada.
+
+Criterio incorporado:
+- Publicación en El Peruano: 1 de mayo de 2026.
+- Cómputo desde el siguiente día hábil.
+- Se excluyen sábados, domingos, feriados nacionales y el 27 de julio de 2026, declarado día no laborable para el sector público.
+- Fechas calculadas: 90 días hábiles = 14/09/2026; 120 días hábiles = 27/10/2026.
+
+Importante: verificar nuevamente las fechas si se declaran nuevos días no laborables aplicables al sector público.
